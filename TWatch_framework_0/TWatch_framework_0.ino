@@ -7,6 +7,8 @@
 #include "config.h"
 #include <soc/rtc.h>
 
+#include "WiFi.h"
+
 TTGOClass *ttgo;
 
 uint32_t targetTime = 0;       // for next 1 second display update
@@ -20,8 +22,11 @@ void setup() {
   ttgo = TTGOClass::getWatch();
   ttgo->begin();
   ttgo->tft->setTextFont(1);
-  ttgo->tft->fillScreen(TFT_BLACK);
-  ttgo->tft->setTextColor(TFT_YELLOW, TFT_BLACK); // Note: the new fonts do not draw the background colour
+  //ttgo->tft->fillScreen(TFT_BLACK);
+  //ttgo->tft->setTextColor(TFT_YELLOW, TFT_BLACK); // Note: the new fonts do not draw the background colour
+  ttgo->tft->fillScreen(TFT_RED);
+  ttgo->tft->setTextColor(TFT_WHITE, TFT_RED); // Note: the new fonts do not draw the background colour
+
   //Initialize lvgl
   ttgo->lvgl_begin();
 
@@ -34,10 +39,16 @@ void setup() {
   displayTime(true); // Our GUI to show the time
   ttgo->openBL(); // Turn on the backlight
 
+  Serial.begin(115200);
+  Serial.println("Serial Begin");
+
+  WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
 }
 
 void loop() {
-
+  
+  Serial.println("Serial Looped");
   if (targetTime < millis()) {
     targetTime = millis() + 1000;
     displayTime(ss == 0); // Call every second but only update time every minute
@@ -71,7 +82,11 @@ void loop() {
       case 5:
         appSetTime();
         break;
+      case 11:
+        appWifi();
+        break;
     }
+   
     displayTime(true);
   }
 }

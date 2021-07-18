@@ -30,7 +30,8 @@ void displayTime(boolean fullUpdate) {
 
     ttgo->tft->setTextColor(0x39C4, TFT_BLACK); // Set desired color
     ttgo->tft->drawString("88:88", xpos, ypos, 7);
-    ttgo->tft->setTextColor(0xFBE0, TFT_BLACK); // Orange
+    //ttgo->tft->setTextColor(0xFBE0, TFT_BLACK); // Orange
+    ttgo->tft->setTextColor(TFT_GREEN, TFT_BLACK); // Orange
 
     if (hh < 10) xpos += ttgo->tft->drawChar('0', xpos, ypos, 7);
     xpos += ttgo->tft->drawNumber(hh, xpos, ypos, 7);
@@ -43,7 +44,8 @@ void displayTime(boolean fullUpdate) {
   if (ss % 2) { // Toggle the colon every second
     ttgo->tft->setTextColor(0x39C4, TFT_BLACK);
     xpos += ttgo->tft->drawChar(':', xcolon, ypos, 7);
-    ttgo->tft->setTextColor(0xFBE0, TFT_BLACK);
+    //ttgo->tft->setTextColor(0xFBE0, TFT_BLACK);
+    ttgo->tft->setTextColor(TFT_GREEN, TFT_BLACK);
   } else {
     ttgo->tft->drawChar(':', xcolon, ypos, 7);
   }
